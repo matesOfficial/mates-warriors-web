@@ -6,12 +6,12 @@ import {
   ModalCloseButton, ModalContent,
   ModalFooter, ModalHeader, ModalOverlay
 } from "@chakra-ui/react";
-
 import camelToTitle from "../../../../utils/camelToTitle";
-
 import BloodDonor from "./BloodDonor";
 import OxygenDonor from "./OxygenDonor";
 import PlasmaDonor from "./PlasmaDonor";
+
+
 
 
 const getModal = (id) => {
@@ -32,8 +32,8 @@ export default function FormModals({ open, onClose, id }) {
       <Modal isOpen={open} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader><Center>{camelToTitle(id)}</Center></ModalHeader>
           <ModalCloseButton />
+          <ModalHeader><Center>{camelToTitle(id)}</Center></ModalHeader>
 
           <ModalBody pb={6}>
             {getModal(id)}

@@ -1,4 +1,4 @@
-export default function (text) {
+const Convert = (text) => {
     if (text) {
         const result = text.replace(/([A-Z])/g, " $1");
         const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
@@ -7,3 +7,5 @@ export default function (text) {
     return text;
 }
 
+
+export default Convert

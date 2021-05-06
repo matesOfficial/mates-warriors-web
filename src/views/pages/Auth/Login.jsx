@@ -1,10 +1,10 @@
 import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert'
 import { Button } from '@chakra-ui/button'
 import { FormControl, FormLabel } from '@chakra-ui/form-control'
-import { PhoneIcon } from '@chakra-ui/icons'
+import { AddIcon, PhoneIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input'
-import { VStack } from '@chakra-ui/layout'
+import { Divider, VStack } from '@chakra-ui/layout'
 import { Box, Center, Flex, Text } from '@chakra-ui/layout'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { Collapse } from '@chakra-ui/transition'
@@ -12,7 +12,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import LoginSVG from '../../../assets/login.svg'
-import maitLogo from '../../../assets/mait.png'
+import mauLogo from '../../../assets/MAU-logo.png'
+import androidLogo from "../../../assets/Icons/android.svg"
+import appleLogo from "../../../assets/Icons/apple.svg"
 import { userLogin, setCurUser } from '../../../store/auth'
 import { validatePhone } from '../../../utils/regex'
 
@@ -65,7 +67,7 @@ function Login() {
               />
             </Center>
 
-            <Box flex="1" p={sm ? '2rem' : '4rem'} >
+            <Box flex="1" p={sm ? '2rem' : '4rem'}>
               <VStack justify='space-between' h="100%">
                 <Box width="100%">
                   <FormControl id="mobile" isRequired>
@@ -107,14 +109,33 @@ function Login() {
                   >
                     {!openOtp ? "Get OTP" : "Proceed"}
                   </Button>
+                  <Flex align="center">
+                    <Divider my="4" flex="1" />
+                    <Text color="gray.500" mx='4'>OR</Text>
+                    <Divider my="4" flex="1" />
+                  </Flex>
                 </Box>
+
+                <Flex width="100%" justify="space-between" direction={sm ? 'column' : 'row'}>
+                  <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
+                    colorScheme="whatsapp" my="2"
+                  >
+                    Download Android App
+                  </Button>
+                  <Button leftIcon={<Image src={appleLogo} boxSize="20px" objectFit="scale-down" />}
+                    colorScheme="blackAlpha" my="2"
+                  >
+                    Download iOS App
+                  </Button>
+                </Flex>
+
                 <br />
                 <br />
                 <Center>
                   <VStack spacing={0}>
                     <Text fontSize="sm">Intiative By</Text>
                     <Image
-                      src={maitLogo}
+                      src={mauLogo}
                       boxSize="80px"
                       objectFit="scale-down"
                     />

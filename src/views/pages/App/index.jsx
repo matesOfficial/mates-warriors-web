@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { auth } from "../../../firebase";
 import { setCurUser } from '../../../store/auth';
-import PrivateRoute from '../../containers/PrivateRoute';
 import Login from '../Auth/Login';
 import Dashboard from '../Dashboard';
-
+import Donors from '../Donors';
+import PrivateRoute from "../../containers/PrivateRoute"
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ function App() {
       <Switch>
         <Route path="/login" exact component={Login} />
         <PrivateRoute path="/" exact component={Dashboard} />
+        <PrivateRoute path="/donors" exact component={Donors} />
       </Switch>
     </BrowserRouter>
   )
