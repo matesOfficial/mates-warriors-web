@@ -10,7 +10,10 @@ export default function Footer() {
     <>
       {/* Footer */}
       {/* <div style={{ padding: "40px" }}></div> */}
-      <Box bg="yellow.100" width="100%" p="3" >
+      <Box bg="yellow.100" width="100%" p="3" 
+        bottom="0"
+        position="fixed"
+      >
         <Center>
           <Text fontSize='sm'>
             Copyright &copy; <b>Maharaja Agrasen Technical Society 2021</b>

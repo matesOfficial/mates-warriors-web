@@ -1,5 +1,6 @@
 import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert'
 import { Button } from '@chakra-ui/button'
+import { Heading, Tooltip } from "@chakra-ui/react"
 import { FormControl, FormLabel } from '@chakra-ui/form-control'
 import { AddIcon, PhoneIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
@@ -13,10 +14,13 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import LoginSVG from '../../../assets/login.svg'
 import mauLogo from '../../../assets/MAU-logo.png'
-import androidLogo from "../../../assets/Icons/android.svg"
+import androidButton from "../../../assets/AndroidAppDownloadButton.png"
 import appleLogo from "../../../assets/Icons/apple.svg"
 import { userLogin, setCurUser } from '../../../store/auth'
 import { validatePhone } from '../../../utils/regex'
+
+import Footer from '../../components/Footer'
+import NavBar from '../../components/NavBar'
 
 const styles = {
   alert: { position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', width: 'fit-content' }
@@ -49,13 +53,14 @@ function Login() {
 
   return (
     <>
+      <NavBar />
       {!!error &&
         <Alert status="error" style={styles.alert}>
           <AlertIcon />
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       }
-      <Center minH="100vh">
+      <Center minH="86vh">
         <Box w='75vw' borderWidth="1px" borderRadius="lg" minH="80vh"
           bgColor="#fff"
         >
@@ -70,6 +75,9 @@ function Login() {
             <Box flex="1" p={sm ? '2rem' : '4rem'}>
               <VStack justify='space-between' h="100%">
                 <Box width="100%">
+                  <Center mb={10}>
+                    <Heading size="md">Login</Heading>
+                  </Center>
                   <FormControl id="mobile" isRequired>
                     <FormLabel >Enter Mobile Number</FormLabel>
                     <InputGroup>
@@ -116,29 +124,32 @@ function Login() {
                   </Flex>
                 </Box>
 
-                <Flex width="100%" justify="space-between" direction={sm ? 'column' : 'row'}>
-                  <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
-                    colorScheme="whatsapp" my="2"
-                  >
-                    Download Android App
-                  </Button>
-                  <Button leftIcon={<Image src={appleLogo} boxSize="20px" objectFit="scale-down" />}
-                    colorScheme="blackAlpha" my="2"
-                  >
-                    Download iOS App
-                  </Button>
-                </Flex>
+                <Center>
+                  <Flex width="100%" justify="space-between" direction={sm ? 'column' : 'row'}>
+                      {/* <Button leftIcon={<Image src={appleLogo} boxSize="20px" objectFit="scale-down" />}
+                        colorScheme="whatsapp" my="2"
+                      >
+                        Download Android App
+                      </Button> */}
+
+                      <Box as="button" colorScheme="whatsapp" my="2" height="5vh" >
+                        <Image src={androidButton} height="7vh" right={0}/>
+                      </Box>
+                  </Flex>
+                </Center>
 
                 <br />
                 <br />
                 <Center>
                   <VStack spacing={0}>
-                    <Text fontSize="sm">Intiative By</Text>
-                    <Image
-                      src={mauLogo}
-                      boxSize="80px"
-                      objectFit="scale-down"
-                    />
+                    <Text fontSize="sm">An Intiative By</Text>
+                      <Tooltip label="Maharaja Agrasen Technical Society">
+                        <Image
+                          src={mauLogo}
+                          boxSize="80px"
+                          objectFit="scale-down"
+                        />
+                    </Tooltip>
                   </VStack>
                 </Center>
               </VStack>
@@ -146,6 +157,7 @@ function Login() {
           </Flex>
         </Box>
       </Center>
+      <Footer/>
     </>
   )
 }
