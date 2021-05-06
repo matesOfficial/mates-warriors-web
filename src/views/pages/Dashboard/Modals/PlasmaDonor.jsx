@@ -33,7 +33,13 @@ export default function PlasmaDonor() {
         <Input variant='filled' placeholder="Name" />
       </FormControl>
       <FormControl mt={4}>
-        <Input variant='filled' placeholder="City" />
+        <Select variant='filled' placeholder="Select your city">
+          {cities.map(item => {
+            return (
+              <option value="option1">{item}</option>
+            )
+          })}
+        </Select>
       </FormControl>
       <FormControl mt={4}>
         <Input variant='filled' placeholder="Pin-Code" />
