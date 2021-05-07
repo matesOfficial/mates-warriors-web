@@ -1,21 +1,18 @@
 import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert'
 import { Button } from '@chakra-ui/button'
 import { FormControl, FormLabel } from '@chakra-ui/form-control'
-import { AddIcon, PhoneIcon } from '@chakra-ui/icons'
+import { PhoneIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input'
-import { Divider, VStack } from '@chakra-ui/layout'
-import { Box, Center, Flex, Text } from '@chakra-ui/layout'
+import { Box, Center, Divider, Flex, Text, VStack } from '@chakra-ui/layout'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { Collapse } from '@chakra-ui/transition'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
-import LoginSVG from '../../../assets/login.svg'
-import mauLogo from '../../../assets/MAU-logo.png'
 import androidLogo from "../../../assets/Icons/android.svg"
 import appleLogo from "../../../assets/Icons/apple.svg"
-import { userLogin, setCurUser } from '../../../store/auth'
+import LoginSVG from '../../../assets/login.svg'
+import mauLogo from '../../../assets/MAU-logo.png'
+import { useAuth } from '../../../store/AuthContext'
 import { validatePhone } from '../../../utils/regex'
 
 import firebase from 'firebase'
@@ -25,58 +22,39 @@ const styles = {
 }
 
 function Login() {
-  const [openOtp, setOpenOtp] = useState(false)
   const [mobileInput, setMobileInput] = useState('')
   const [otpInput, setOtpInput] = useState('')
   const [error, setError] = useState(null)
-  const history = useHistory();
+
+  const { login, otpSent, submitOtp, isLoading } = useAuth();
 
   const [sm] = useMediaQuery("(max-width: 1024px)")
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (mobileInput && !mobileInput?.startsWith("+")) {
+      setMobileInput(p => "+91" + p)
+    }
+  }, [mobileInput])
 
-  useEffect(async () => {
-    if (!openOtp) setTimeout(() => setError(null), 2000)
+  useEffect(() => {
+    return setTimeout(() => setError(null), 2000)
+  }, [error, otpSent])
 
-
-  
-
-  }, [error, openOtp])
-// ------------------------------------------------this will check the otp validation--------------------------------------
-  const handleSubmit = (e) => {
+  const handlePhone = async (e) => {
     e.preventDefault();
-    var recaptcha
-    validatePhone(mobileInput) ? setOpenOtp(true) : setError("Please enter valid phone number");
 
-    if (openOtp) {
-      dispatch(setCurUser(mobileInput))
-      
-
-      if(otpInput.length!=null){
-      let number="+91"+mobileInput
-      console.log(number)
-      recaptcha=new firebase.auth.RecaptchaVerifier("recaptcha-container")
-      firebase.auth().signInWithPhoneNumber(number,recaptcha).then((e)=>{
-       
-        let code = prompt("enter otp")
-      e.confirm(code).then((response)=>{
-        console.log(response)
-        localStorage.setItem("uid",JSON.stringify(response.user.uid))
-         history.push('/')
-      })
-
-    }).catch((err)=>{
-      console.log(err)
-    })
-  }
+    if (otpSent) {
+      if (!otpInput) return
+      submitOtp(otpInput)
+    }
+    else {
+      if (validatePhone(mobileInput)) {
+        await login(mobileInput);
+      } else setError("Please enter valid phone number");
     }
   }
 
-  const setUpRecaptcha=()=>{
-    
-    
-  }
-  
+
   return (
     <>
     
@@ -87,6 +65,7 @@ function Login() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       }
+      <div id="recaptcha-verifier-container"></div>
       <Center minH="100vh">
         <Box w='75vw' borderWidth="1px" borderRadius="lg" minH="80vh"
           bgColor="#fff"
@@ -120,7 +99,7 @@ function Login() {
                   </FormControl>
                   <br />
                   <FormControl id="otp" isRequired>
-                    <Collapse in={openOtp} animateOpacity>
+                    <Collapse in={otpSent} animateOpacity>
                       <FormLabel >Enter OTP</FormLabel>
                       <InputGroup >
                         <Input size="md" variant="filled"
@@ -137,9 +116,11 @@ function Login() {
                     my="1rem"
                     width="100%"
                     colorScheme="yellow"
-                    onClick={handleSubmit}
+                    isLoading={isLoading}
+                    isDisabled={(otpSent && !otpInput)}
+                    onClick={handlePhone}
                   >
-                    {!openOtp ? "Get OTP" : "Proceed"}
+                    {!otpSent ? "Get OTP" : "Proceed"}
                   </Button>
                   <Flex align="center">
                     <Divider my="4" flex="1" />

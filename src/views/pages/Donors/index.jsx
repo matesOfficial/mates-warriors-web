@@ -25,6 +25,8 @@ const getData = (id) => {
       return { name: "Plasma Donors", img: PlasmaDrop }
     case 'oxygenDonor':
       return { name: "Oxygen Donors", img: Oxygen }
+    default:
+      return { name: "Blood Donors", img: BloodDrop }
   }
 }
 

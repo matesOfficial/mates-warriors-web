@@ -9,8 +9,11 @@ import { Link } from 'react-router-dom'
 import LogOutLogo from '../../../assets/Icons/logout.svg'
 import ProfileLogo from '../../../assets/Icons/profile-user.svg'
 import Logo from '../../../assets/MAU-logo.png'
+import { useAuth } from '../../../store/AuthContext'
 
 export default function NavBar() {
+
+  const { logout } = useAuth();
 
   return (
     <>
@@ -42,7 +45,10 @@ export default function NavBar() {
               <strong>History</strong>
             </MenuItem>
             <MenuDivider />
-            <MenuItem color="red.500" icon={<Image src={LogOutLogo} boxSize="1.2rem" />}>
+            <MenuItem color="red.500"
+              onClick={logout}
+              icon={<Image src={LogOutLogo} boxSize="1.2rem" />}
+            >
               <strong>LogOut</strong>
             </MenuItem>
           </MenuList>

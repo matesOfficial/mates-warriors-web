@@ -2,79 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import {
-  Center,
-  FormControl,
-  Image,
-  Input,
-  Select,
-  Stack,
+  Center, FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Formik,
-  Form,
-  Field,
-  validateName,
-  Button,
+  Image, Input,
+  Select
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import BloodDrop from '../../../../assets/bloodDrop.svg';
+import { citiesAndStates } from '../../../../utils/citiesAndState';
 
-import BloodDrop from "../../../../assets/bloodDrop.svg";
-
-function BloodDonor({callback}) {
-  let cities = [
-    "Delhi",
-    "Gurgaon",
-    "Bangalore",
-    "Pune",
-    "Ahmedabad",
-    "Mumbai",
-    "Thane",
-    "Nashik",
-    "Kolkata",
-    "Lucknow",
-    "Noida",
-    "Faridabad",
-    "Prayagraj",
-    "Patna",
-    "Ranchi",
-    "Jaipur",
-    "Agra",
-    "Chandigarh",
-    "Nagpur",
-    "Chennai",
-    "Bhopal",
-    "Indore",
-    "Hyderabad",
-    "Kerala",
-    "Bihar",
-    "Gujarat",
-    "Maharashtra",
-    "Karnataka",
-    "Madhya Pradesh",
-    "Orissa",
-    "Uttar Pradesh",
-    "Telangana",
-    "Andhra Pradesh",
-    "Chhatisgarh",
-    "Tamil Nadu",
-    "West Bengal",
-    "Haryana",
-    "Uttrakhand",
-    "J&K",
-    "Himachal Pradesh",
-    "Jharkhand",
-    "Rajasthan",
-    "Goa",
-    "Assam",
-    "Punjab",
-    "Saurashtra & South Gujarat",
-    "Uttar Pradesh East",
-    "Uttar Pradesh West",
-    "Bundelkhand",
-    "Other",
-  ];
-
-  let bloodgroups = ["O-", "O+", "B-", "B+", "A-", "A+", "AB-", "AB+"];
 
   const getData = () => {};
   const {
@@ -95,91 +31,69 @@ function BloodDonor({callback}) {
     transition: "all 0.2s ease 0s",
   };
 
+export default function BloodDonor() {
+  const [state, setState] = useState('')
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Center>
-          <Image src={BloodDrop} boxSize="100px" objectFit="cover" />
-        </Center>
-        <FormControl mt={4}>
-          <input
-            style={cssOfInput}
-            type="text"
-            placeholder="Name"
-            {...register("name", { required: true, maxLength: 80 })}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <input
-            style={cssOfInput}
-            type="tel"
-            placeholder="Phone Number"
-            {...register("phone_number", {
-              required: true,
-              minLength: 6,
-              maxLength: 12,
-            })}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <select 
-            style={cssOfInput}
-            {...register("Blood Group", { required: true })}
-          >
-            <option  value="">Blood Group</option>;
-            {bloodgroups.map((item) => {
-              return <option value={item}>{item}</option>;
-            })}
-          </select>
-        </FormControl>
-        <FormControl mt={4}>
-          <select
-            {...register("city", { required: true, maxLength: 100 })}
-            style={cssOfInput}
-            variant="filled"
-          >
-                        <option  value="">Select City</option>;
+      <Center>
+        <Image src={BloodDrop}
+          boxSize="100px"
+          objectFit="cover"
+        />
+      </Center>
+      <FormControl mt={4}  >
+        <FormLabel >Full Name</FormLabel>
+        <Input variant='filled' placeholder=" Name" />
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >State</FormLabel>
+        <Select variant='filled' placeholder="Select your state" onChange={(e) => setState(e.target.value)}>
+          {Object.keys(citiesAndStates).map(stateName => {
+            return (
+              <option value={stateName}>{stateName}</option>
+            )
+          })}
+        </Select>
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >City</FormLabel>
+        <Select variant='filled' placeholder="Select your city">
+          {citiesAndStates[state].map(city => {
+            return (
+              <option value={city}>{city}</option>
+            )
+          })}
+        </Select>
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >Pin Code</FormLabel>
+        <Input variant='filled' placeholder="Pin Code" />
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >Phone Number</FormLabel>
+        <Input variant='filled' placeholder="Phone Number" />
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >BloodGroup</FormLabel>
+        <Select variant='filled' placeholder="Select BloodGroup">
+          {bloodgroups.map(item => {
+            return (
+              <option value="option1">{item}</option>
+            )
+          })}
+        </Select>
+      </FormControl>
+      <FormControl mt={4}>
+        <FormLabel >Mates Affiliation <small>(if any)</small></FormLabel>
+        <Input variant='filled' placeholder="Mates Affiliation" />
+      </FormControl>
+      <FormControl mt={4} >
+        <FormLabel >Date of last of Blood Donation</FormLabel>
+        <Input variant='filled' placeholder="Date of last of Blood Donation" type="date" />
+      </FormControl>
 
-            {cities.map((item) => {
-              return <option value={item}>{item}</option>;
-            })}
-          </select>
-        </FormControl>
-        <FormControl mt={4}>
-          <input
-            style={cssOfInput}
-            type="number"
-            placeholder="Pin-Code"
-            {...register("pin_code", { required: true, maxLength: 100 })}
-          />
-        </FormControl>
 
-        <FormControl mt={4}>
-          <select placeholder="Mates Affiliation"
-            style={cssOfInput}
-            {...register("MATES Affiliation", { required: true })}
-          >
-            <option value="Student">Student</option>
-            <option value="Alumni">Alumni</option>
-            <option value="Faculty">Faculty</option>
-            <option value="Administrative Staff">Administrative Staff</option>
-            <option value="Trustee">Trustee</option>
-            <option value="Other">Other</option>
-          </select>
-        </FormControl>
 
-    
-        <FormControl mt={4}>
-          <input  style={cssOfInput}
-
-            type="date"
-            {...register("last_blood_donation_timestamp", { required: true })}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <input type="submit" />
-        </FormControl>
-      </form>
     </>
   );
 }
