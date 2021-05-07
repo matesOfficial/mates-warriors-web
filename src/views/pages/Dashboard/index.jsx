@@ -28,40 +28,40 @@ const DonorLayer = {
 }
 
 const recentDonors = [
-  { 
-    'type' : 'Plasma', 
-    'attributes' : {
-      'Name' : 'Shubh Bansal',
-      'Phone No.' : '9717593233',
-      'Blood Group' : 'B+',
-      'State' : 'Delhi',
+  {
+    'type': 'Plasma',
+    'attributes': {
+      'Name': 'Shubh Bansal',
+      'Phone No.': '9717593233',
+      'Blood Group': 'B+',
+      'State': 'Delhi',
     }
   },
-  { 
-    'type' : 'Blood', 
-    'attributes' : {
-      'Name' : 'Simran Singh',
-      'Phone No.' : '8291834211',
-      'Blood Group' : 'Philips',
-      'State' : 'Delhi',
+  {
+    'type': 'Blood',
+    'attributes': {
+      'Name': 'Simran Singh',
+      'Phone No.': '8291834211',
+      'Blood Group': 'Philips',
+      'State': 'Delhi',
     }
   },
-  { 
-    'type' : 'Blood', 
-    'attributes' : {
-      'Name' : 'Vikas Gupta',
-      'Phone No.' : '9212528520',
-      'Blood Group' : 'B+',
-      'State' : 'Delhi',
+  {
+    'type': 'Blood',
+    'attributes': {
+      'Name': 'Vikas Gupta',
+      'Phone No.': '9212528520',
+      'Blood Group': 'B+',
+      'State': 'Delhi',
     }
   },
-  { 
-    'type' : 'Plasma', 
-    'attributes' : {
-      'Name' : 'Atishay Jain',
-      'Phone No.' : '9911789351',
-      'Blood Group' : 'AB-',
-      'State' : 'Delhi',
+  {
+    'type': 'Plasma',
+    'attributes': {
+      'Name': 'Atishay Jain',
+      'Phone No.': '9911789351',
+      'Blood Group': 'AB-',
+      'State': 'Delhi',
     }
   },
 ]
@@ -170,7 +170,7 @@ export default function Dashboard() {
                         <Button
                           isDisabled={DonorLayer[type].disabled}
                           as={Link}
-                          to={`/donors?type=${type}}`}
+                          to={`/donors?type=${type}`}
                           variant="outline"
                           _focus={{ borderColor: "var(--chakra-colors-yellow-400)" }}
                           borderWidth='2px' borderColor='rgba(238, 238, 238, 1)'
@@ -188,25 +188,25 @@ export default function Dashboard() {
                     </Tooltip>
                   ))}
                 </Wrap>
-                
-                <VStack display={{base:'none',xl:'block'}}>
+
+                <VStack display={{ base: 'none', xl: 'block' }}>
                   <HStack spacing={6} mt='6' mb="3" ml="1"  >
                     <Text size="sm" >Try our most recent and verified leads</Text>
                   </HStack>
                   <HStack spacing='10' height='100%' >
-                      {recentDonors.map(recentDonation => (
-                        <Box p='5' borderWidth="1px" height='100%' width="18vw" borderRadius="lg" 
-                          backgroundColor={(recentDonation.type==='Blood')?'#FFF5F5':'#FFFFF0'}
-                        >
-                          <Text fontWeight="bold" isTruncated mb={2} >{recentDonation.type} Available</Text>
-                          {Object.keys(recentDonation.attributes).map(item => (
-                            <Text fontSize="14px" isTruncated ><i>{item}:</i> <b>{recentDonation.attributes[item]}</b></Text>
-                          ))}
-                        </Box>
-                      ))}
+                    {recentDonors.map(recentDonation => (
+                      <Box p='5' borderWidth="1px" height='100%' width="18vw" borderRadius="lg"
+                        backgroundColor={(recentDonation.type === 'Blood') ? '#FFF5F5' : '#FFFFF0'}
+                      >
+                        <Text fontWeight="bold" isTruncated mb={2} >{recentDonation.type} Available</Text>
+                        {Object.keys(recentDonation.attributes).map(item => (
+                          <Text fontSize="14px" isTruncated ><i>{item}:</i> <b>{recentDonation.attributes[item]}</b></Text>
+                        ))}
+                      </Box>
+                    ))}
                   </HStack>
                 </VStack>
-                
+
               </Box>
             </Collapse>
           </Flex>
