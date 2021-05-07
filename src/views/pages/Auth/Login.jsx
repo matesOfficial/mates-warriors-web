@@ -18,6 +18,8 @@ import appleLogo from "../../../assets/Icons/apple.svg"
 import { userLogin, setCurUser } from '../../../store/auth'
 import { validatePhone } from '../../../utils/regex'
 
+import firebase from 'firebase'
+import * as firebaseui from 'firebaseui'
 const styles = {
   alert: { position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', width: 'fit-content' }
 }
@@ -33,22 +35,52 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!openOtp) setTimeout(() => setError(null), 2000)
-  }, [error, openOtp])
 
+
+  
+
+  }, [error, openOtp])
+// ------------------------------------------------this will check the otp validation--------------------------------------
   const handleSubmit = (e) => {
     e.preventDefault();
+    var recaptcha
     validatePhone(mobileInput) ? setOpenOtp(true) : setError("Please enter valid phone number");
 
     if (openOtp) {
       dispatch(setCurUser(mobileInput))
-      history.push('/')
+      
+
+      if(otpInput.length!=null){
+      let number="+91"+mobileInput
+      console.log(number)
+      recaptcha=new firebase.auth.RecaptchaVerifier("recaptcha-container")
+      firebase.auth().signInWithPhoneNumber(number,recaptcha).then((e)=>{
+       
+        let code = prompt("enter otp")
+      e.confirm(code).then((response)=>{
+        console.log(response)
+        localStorage.setItem("uid",JSON.stringify(response.user.uid))
+         history.push('/')
+      })
+
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
     }
   }
 
+  const setUpRecaptcha=()=>{
+    
+    
+  }
+  
   return (
     <>
+    
+    <div id="recaptcha-container"></div>
       {!!error &&
         <Alert status="error" style={styles.alert}>
           <AlertIcon />
