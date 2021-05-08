@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authData => {
-      setCurUser(authData);
+      setCurUser(authData.toJSON());
     })
     return unsubscribe;
   }, [])
@@ -39,6 +39,20 @@ export function AuthProvider({ children }) {
     return clearInterval(interval)
   }, [firebaseError])
 
+  const signInWithOtp = (codeId, otp) => {
+    let credential = firebase.auth.PhoneAuthProvider.credential(codeId, otp);
+    setIsLoading(true)
+    return auth.signInWithCredential(credential)
+      .then((res) => {
+        history.push('/')
+      }).catch((e) => {
+        setFirebaseError(e.message)
+      }).finally(() => setIsLoading(false))
+  }
+
+
+
+  // hooks fn's
   const login = (payload) => {
     setOtpSent(false);
     setIsLoading(true);
@@ -65,19 +79,9 @@ export function AuthProvider({ children }) {
       })
   }
 
-  const signInWithOtp = (codeId, otp) => {
-    let credential = firebase.auth.PhoneAuthProvider.credential(codeId, otp);
-    setIsLoading(true)
-    auth.signInWithCredential(credential)
-      .then((res) => {
-        history.push('/')
-      }).catch((e) => {
-        setFirebaseError(e.message)
-      }).finally(() => setIsLoading(false))
-  }
 
   const submitOtp = (otp) => {
-    signInWithOtp(codeId, otp)
+    return signInWithOtp(codeId, otp)
   }
 
   const logout = () => {

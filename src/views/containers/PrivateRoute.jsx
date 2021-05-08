@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, useHistory } from 'react-router';
-import { useAuth } from '../../store/AuthContext';
+
+import { useAuth } from '../../hooks/AuthContext';
 
 export default function PrivateRoute({ component: Component, ...rest }) {
 
   const { curUser } = useAuth();
+  console.log("Private : ", curUser);
 
   return (
     <Route {...rest}

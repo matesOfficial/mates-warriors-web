@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import LogOutLogo from '../../../assets/Icons/logout.svg'
 import ProfileLogo from '../../../assets/Icons/profile-user.svg'
 import Logo from '../../../assets/institutelogos/MATES.svg'
-import { useAuth } from '../../../store/AuthContext'
+import { useAuth } from '../../../hooks/AuthContext'
 import { formatPhoneNumber } from '../../../utils/regex'
 
 export default function NavBar() {
@@ -44,7 +44,7 @@ export default function NavBar() {
             </MenuItem> */}
             <MenuDivider />
             <MenuItem color="red.500"
-              onClick={logout}
+              onClick={async () => await logout()}
               icon={<Image src={LogOutLogo} boxSize="1.2rem" />}
             >
               <strong>LogOut</strong>

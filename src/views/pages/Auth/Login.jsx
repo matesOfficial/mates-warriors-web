@@ -13,7 +13,7 @@ import androidLogo from "../../../assets/Icons/android.svg"
 import appleLogo from "../../../assets/Icons/apple.svg"
 import LoginSVG from '../../../assets/login.svg'
 import mauLogo from '../../../assets/logos.svg'
-import { useAuth } from '../../../store/AuthContext'
+import { useAuth } from '../../../hooks/AuthContext'
 import { formatPhoneNumber, validatePhone } from '../../../utils/regex'
 
 const styles = {
@@ -45,7 +45,7 @@ function Login() {
 
     if (otpSent) {
       if (!otpInput) return
-      submitOtp(otpInput)
+      await submitOtp(otpInput)
     }
     else {
       if (validatePhone(mobileInput)) {
@@ -138,13 +138,13 @@ function Login() {
                 </Box>
 
                 {/* <Center> */}
-                  <Flex width="100%" justify="center" direction={sm ? 'column' : 'row'}>
-                      <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
-                        colorScheme="whatsapp" my="2"
-                      >
-                        Download Android App
+                <Flex width="100%" justify="center" direction={sm ? 'column' : 'row'}>
+                  <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
+                    colorScheme="whatsapp" my="2"
+                  >
+                    Download Android App
                       </Button>
-                  </Flex>
+                </Flex>
                 {/* </Center> */}
 
                 <br />
