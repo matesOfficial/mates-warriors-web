@@ -5,7 +5,6 @@ import { useAuth } from '../../hooks/AuthContext';
 export default function PublicRoute({ component: Component, ...rest }) {
 
   const { curUser } = useAuth();
-  console.log("Public : ", curUser);
 
 
   return (

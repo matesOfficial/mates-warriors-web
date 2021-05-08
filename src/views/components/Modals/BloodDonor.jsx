@@ -1,13 +1,8 @@
-import {
-  Center, FormControl,
-  FormLabel,
-  Image, Input,
-  Select
-} from "@chakra-ui/react";
+import { Center, FormControl, FormLabel, Image, Input, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
-import BloodDrop from '../../../../assets/bloodDrop.svg';
-import { citiesAndStates } from '../../../../utils/citiesAndState';
 
+import BloodDrop from '../../../assets/bloodDrop.svg';
+import { citiesAndStates } from '../../../utils/citiesAndState';
 
 let bloodgroups = ['O-', 'O+', 'B-', 'B+', 'A-', 'A+', 'AB-', 'AB+']
 
@@ -71,7 +66,6 @@ export default function BloodDonor() {
         <FormLabel >Date of last of Blood Donation</FormLabel>
         <Input variant='filled' placeholder="Date of last of Blood Donation" type="date" />
       </FormControl>
-
     </>
   )
 }

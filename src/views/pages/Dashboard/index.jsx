@@ -16,8 +16,8 @@ import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
 import { useAuth } from '../../../hooks/AuthContext'
 import Footer from '../../components/Footer'
+import FormModals from '../../components/Modals'
 import NavBar from '../../components/NavBar'
-import FormModals from './Modals'
 
 const DonorLayer = {
   'bloodDonor': { name: 'Blood', image: BloodDrop, disabled: false },
@@ -194,13 +194,13 @@ export default function Dashboard() {
                     <Text size="sm" >Try our most recent and verified leads</Text>
                   </HStack>
                   <HStack spacing='10' height='100%' >
-                    {recentDonors.map(recentDonation => (
-                      <Box p='5' borderWidth="1px" height='100%' width="18vw" borderRadius="lg"
+                    {recentDonors.map((recentDonation, idx) => (
+                      <Box p='5' key={idx} borderWidth="1px" height='100%' width="18vw" borderRadius="lg"
                         backgroundColor={(recentDonation.type === 'Blood') ? '#FFF5F5' : '#FFFFF0'}
                       >
                         <Text fontWeight="bold" isTruncated mb={2} >{recentDonation.type} Available</Text>
                         {Object.keys(recentDonation.attributes).map(item => (
-                          <Text fontSize="14px" isTruncated ><i>{item}:</i> <b>{recentDonation.attributes[item]}</b></Text>
+                          <Text fontSize="14px" key={item} isTruncated ><i>{item}:</i> <b>{recentDonation.attributes[item]}</b></Text>
                         ))}
                       </Box>
                     ))}

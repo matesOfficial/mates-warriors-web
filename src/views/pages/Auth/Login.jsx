@@ -8,6 +8,7 @@ import { Box, Center, Divider, Flex, Text, VStack } from '@chakra-ui/layout'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { Collapse } from '@chakra-ui/transition'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import androidLogo from "../../../assets/Icons/android.svg"
 import appleLogo from "../../../assets/Icons/apple.svg"
@@ -140,10 +141,11 @@ function Login() {
                 {/* <Center> */}
                 <Flex width="100%" justify="center" direction={sm ? 'column' : 'row'}>
                   <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
-                    colorScheme="whatsapp" my="2"
+                    colorScheme="whatsapp" my="2" as={Link}
+                    to={'https://mait.ac.in/images/mates_warriors_v1.0.0.apk'}
                   >
                     Download Android App
-                      </Button>
+                  </Button>
                 </Flex>
                 {/* </Center> */}
 

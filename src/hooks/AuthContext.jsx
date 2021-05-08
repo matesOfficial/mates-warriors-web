@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import firebase from 'firebase';
 
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authData => {
-      setCurUser(authData.toJSON());
+      setCurUser(authData?.toJSON());
     })
     return unsubscribe;
   }, [])
@@ -44,12 +44,20 @@ export function AuthProvider({ children }) {
     setIsLoading(true)
     return auth.signInWithCredential(credential)
       .then((res) => {
+        if (res.additionalUserInfo.isNewUser) {
+          db.ref('users/' + res.user.uid).set({
+            name: res.user.displayName,
+            email: res.user.email,
+            photo_url: res.user.photoURL,
+            uid: res.user.uid,
+            phone_number: res.user.phoneNumber
+          });
+        }
         history.push('/')
       }).catch((e) => {
         setFirebaseError(e.message)
       }).finally(() => setIsLoading(false))
   }
-
 
 
   // hooks fn's
@@ -86,7 +94,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     auth.signOut()
-    setCurUser(null);
+    setOtpSent(false);
   }
 
   const value = { curUser, otpSent, isLoading, firebaseError, login, submitOtp, logout };
