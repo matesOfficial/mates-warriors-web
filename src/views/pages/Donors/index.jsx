@@ -8,13 +8,13 @@ import BloodDrop from '../../../assets/bloodDrop.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
 import { db } from "../../../firebase"
+import { bloodgroups } from "../../../utils/citiesAndState"
 import Footer from '../../components/Footer'
 import NavBar from '../../components/NavBar'
 import DataCard from "./DataCard"
 
-let cities = ['Delhi', 'Gurgaon', 'Bangalore', 'Pune', 'Ahmedabad', 'Mumbai', 'Thane', 'Nashik', 'Kolkata', 'Lucknow', 'Noida', 'Faridabad', 'Prayagraj', 'Patna', 'Ranchi', 'Jaipur', 'Agra', 'Chandigarh', 'Nagpur', 'Chennai', 'Bhopal', 'Indore', 'Hyderabad', 'Kerala', 'Bihar', 'Gujarat', 'Maharashtra', 'Karnataka', 'Madhya Pradesh', 'Orissa', 'Uttar Pradesh', 'Telangana', 'Andhra Pradesh', 'Chhatisgarh', 'Tamil Nadu', 'West Bengal', 'Haryana', 'Uttrakhand', 'J&K', 'Himachal Pradesh', 'Jharkhand', 'Rajasthan', 'Goa', 'Assam', 'Punjab', 'Saurashtra & South Gujarat', 'Uttar Pradesh East', 'Uttar Pradesh West', 'Bundelkhand', 'Other']
+let cities = ['New Delhi', 'Delhi', 'Gurgaon', 'Bangalore', 'Pune', 'Ahmedabad', 'Mumbai', 'Thane', 'Nashik', 'Kolkata', 'Lucknow', 'Noida', 'Faridabad', 'Prayagraj', 'Patna', 'Ranchi', 'Jaipur', 'Agra', 'Chandigarh', 'Nagpur', 'Chennai', 'Bhopal', 'Indore', 'Hyderabad', 'Kerala', 'Bihar', 'Gujarat', 'Maharashtra', 'Karnataka', 'Madhya Pradesh', 'Orissa', 'Uttar Pradesh', 'Telangana', 'Andhra Pradesh', 'Chhatisgarh', 'Tamil Nadu', 'West Bengal', 'Haryana', 'Uttrakhand', 'J&K', 'Himachal Pradesh', 'Jharkhand', 'Rajasthan', 'Goa', 'Assam', 'Punjab', 'Saurashtra & South Gujarat', 'Uttar Pradesh East', 'Uttar Pradesh West', 'Bundelkhand', 'Other']
 
-let bloodgroups = ['O-', 'O+', 'B-', 'B+', 'A-', 'A+', 'AB-', 'AB+']
 let oxygenType = ['Cylinder', 'Refill', "Concentrator "]
 
 const getData = (id) => {
@@ -31,173 +31,43 @@ const getData = (id) => {
 }
 
 
-const donorList = [
-  {
-    'name': 'Shubh Bansal',
-    'blood_group': 'B+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Vikas Bansal',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110038',
-    'date': '5 May 2021',
-    'phone_number': '921298733'
-  },
-  {
-    'name': 'Simranjeet SIngh',
-    'blood_group': 'O+',
-    'state': 'Bhiwadi',
-    'city': 'Haryana',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Atishay Jain',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'Rohini',
-    'pincode': '110085',
-    'date': '29 April 2021',
-    'phone_number': '8567234521'
-  },
-  {
-    'name': 'Shubh Bansal',
-    'blood_group': 'B+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Vikas Bansal',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110038',
-    'date': '5 May 2021',
-    'phone_number': '921298733'
-  },
-  {
-    'name': 'Simranjeet SIngh',
-    'blood_group': 'O+',
-    'state': 'Bhiwadi',
-    'city': 'Haryana',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Atishay Jain',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'Rohini',
-    'pincode': '110085',
-    'date': '29 April 2021',
-    'phone_number': '8567234521'
-  },
-  {
-    'name': 'Shubh Bansal',
-    'blood_group': 'B+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Vikas Bansal',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110038',
-    'date': '5 May 2021',
-    'phone_number': '921298733'
-  },
-  {
-    'name': 'Simranjeet SIngh',
-    'blood_group': 'O+',
-    'state': 'Bhiwadi',
-    'city': 'Haryana',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Atishay Jain',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'Rohini',
-    'pincode': '110085',
-    'date': '29 April 2021',
-    'phone_number': '8567234521'
-  },
-  {
-    'name': 'Shubh Bansal',
-    'blood_group': 'B+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Vikas Bansal',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'New Delhi',
-    'pincode': '110038',
-    'date': '5 May 2021',
-    'phone_number': '921298733'
-  },
-  {
-    'name': 'Simranjeet SIngh',
-    'blood_group': 'O+',
-    'state': 'Bhiwadi',
-    'city': 'Haryana',
-    'pincode': '110034',
-    'date': '1 May 2021',
-    'phone_number': '9717593233'
-  },
-  {
-    'name': 'Atishay Jain',
-    'blood_group': 'AB+',
-    'state': 'Delhi',
-    'city': 'Rohini',
-    'pincode': '110085',
-    'date': '29 April 2021',
-    'phone_number': '8567234521'
-  },
-];
-
 export default function Donors() {
 
-  const [dbData, setDbData] = useState(donorList)
+  const [dbData, setDbData] = useState([])
+  const [filterCity, setFilterCity] = useState('');
+  const [filterBlood, setFilterBlood] = useState('');
+  const [filterPin, setFilterPin] = useState('');
+
   const [md] = useMediaQuery("(max-width: 500px)")
 
   const { search } = useLocation();
 
   const id = queryString.parse(search).type
 
+  const mapQuery = { bloodDonor: "is_blood_donor", plasmaDonor: "is_plasma_donor" }
+
   const getFirebaseData = async () => {
-    const snapshot = await db.collection('users').get()
+    const snapshot = await db.collection('users').where(`${mapQuery[id]}`, "==", true).get()
     return snapshot.docs.map(doc => doc.data());
   }
 
   useEffect(() => {
     getFirebaseData().then((data) => {
-      setDbData(data);
-    })
-  }, [])
+      setDbData(data.filter((d) => {
+        let city = d.state === filterCity
+        let blood = d.blood_group === filterBlood
+        let pin = d.pin_code.search(filterPin) !== -1
 
+        if (!filterCity) city = true
+        if (!filterBlood) blood = true
+        if (!filterPin) pin = true
+
+        return city && blood && pin
+      }));
+    })
+  }, [filterCity, filterBlood, filterPin])
+
+  console.log(filterCity, filterBlood, filterPin);
 
   return (
     <Flex direction="column" minH="100vh">
@@ -221,28 +91,43 @@ export default function Donors() {
               <HamburgerIcon fontSize="xs" /> &nbsp;&nbsp;
                 <Text fontSize="xs">Filter&nbsp;by</Text>
             </Flex>
-            <Select variant="filled" placeholder="Search by city">
+            <Select variant="filled" placeholder="Search by city"
+              value={filterCity}
+              defaultValue={filterCity}
+              onChange={({ target: { value } }) => setFilterCity(value)}
+            >
               {cities.map(item => (
-                <option key={item} value="option1">{item}</option>
+                <option key={item} value={item}>{item}</option>
               ))}
             </Select>
 
             {id === 'oxygenDonor' ?
-              <Select variant="filled" placeholder="Select Type">
+              <Select variant="filled" placeholder="Select Type"
+                value={filterBlood}
+                defaultValue={filterBlood}
+                onChange={({ target: { value } }) => setFilterBlood(value)}
+              >
                 {oxygenType.map(item => (
-                  <option key={item} value="option1">{item}</option>
+                  <option key={item} value={item}>{item}</option>
                 ))}
               </Select>
               :
-              <Select variant="filled" placeholder="Select Blood Group">
+              <Select variant="filled" placeholder="Select Blood Group"
+                value={filterBlood}
+                defaultValue={filterBlood}
+                onChange={({ target: { value } }) => setFilterBlood(value)}
+              >
                 {bloodgroups.map(item => (
-                  <option key={item} value="option1">{item}</option>
+                  <option key={item} value={item}>{item}</option>
                 ))}
               </Select>
             }
 
             <InputGroup >
-              <Input variant="filled" placeholder="Enter your pin" />
+              <Input variant="filled" placeholder="Enter your pin"
+                value={filterPin}
+                onChange={({ target: { value } }) => setFilterPin(value)}
+              />
               <InputRightElement children={<Search2Icon />} />
             </InputGroup>
 

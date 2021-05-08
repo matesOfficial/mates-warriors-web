@@ -3,7 +3,7 @@ import { ArrowForwardIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/ico
 import { Image } from '@chakra-ui/image'
 import { Avatar, Box, Collapse, Divider, Flex, Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem } from "@chakra-ui/react"
 import { Table, TableCaption, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 import BloodDrop from '../../../assets/bloodDrop.svg'
@@ -14,6 +14,7 @@ import TakerLogo from '../../../assets/Icons/organ-donation.svg'
 import Organ from '../../../assets/organ.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
+import { db } from '../../../firebase'
 import { useAuth } from '../../../hooks/AuthContext'
 import Footer from '../../components/Footer'
 import FormModals from '../../components/Modals'
@@ -27,48 +28,22 @@ const DonorLayer = {
   'organDonor': { name: 'Organ', image: Organ, disabled: true },
 }
 
-const recentDonors = [
-  {
-    'type': 'Plasma',
-    'attributes': {
-      'Name': 'Shubh Bansal',
-      'Phone No.': '9717593233',
-      'Blood Group': 'B+',
-      'State': 'Delhi',
-    }
-  },
-  {
-    'type': 'Blood',
-    'attributes': {
-      'Name': 'Simran Singh',
-      'Phone No.': '8291834211',
-      'Blood Group': 'Philips',
-      'State': 'Delhi',
-    }
-  },
-  {
-    'type': 'Blood',
-    'attributes': {
-      'Name': 'Vikas Gupta',
-      'Phone No.': '9212528520',
-      'Blood Group': 'B+',
-      'State': 'Delhi',
-    }
-  },
-  {
-    'type': 'Plasma',
-    'attributes': {
-      'Name': 'Atishay Jain',
-      'Phone No.': '9911789351',
-      'Blood Group': 'AB-',
-      'State': 'Delhi',
-    }
-  },
-]
-
 export default function Dashboard() {
   const [openModal, setOpenModal] = useState(null);
   const [isDonor, setIsDonor] = useState(false);
+
+  const [recentDonors, setRecentDonors] = useState([])
+
+  const getRecentDonors = async () => {
+    const snapshot = await db.collection('users').limit(4).get()
+    return snapshot.docs.map(doc => doc.data());
+  }
+
+  // useEffect(() => {
+  //   getRecentDonors().then((data) => {
+  //     setRecentDonors(data);
+  //   })
+  // }, [])
 
   const closeModal = () => { setOpenModal(null) };
 
@@ -189,23 +164,25 @@ export default function Dashboard() {
                   ))}
                 </Wrap>
 
-                <VStack display={{ base: 'none', xl: 'block' }}>
+                {/* <VStack display={{ base: 'none', xl: 'block' }}>
                   <HStack spacing={6} mt='6' mb="3" ml="1"  >
                     <Text size="sm" >Try our most recent and verified leads</Text>
                   </HStack>
                   <HStack spacing='10' height='100%' >
-                    {recentDonors.map((recentDonation, idx) => (
+                    {recentDonors.map((rd, idx) => (
                       <Box p='5' key={idx} borderWidth="1px" height='100%' width="18vw" borderRadius="lg"
-                        backgroundColor={(recentDonation.type === 'Blood') ? '#FFF5F5' : '#FFFFF0'}
+                        backgroundColor={rd.is_blood_donor ? '#FFF5F5' : "FFFFF0"}
                       >
-                        <Text fontWeight="bold" isTruncated mb={2} >{recentDonation.type} Available</Text>
-                        {Object.keys(recentDonation.attributes).map(item => (
-                          <Text fontSize="14px" key={item} isTruncated ><i>{item}:</i> <b>{recentDonation.attributes[item]}</b></Text>
-                        ))}
+                        <Text fontWeight="bold" isTruncated mb={2} >{rd.is_blood_donor ? 'Blood' : "Plasma"} Available</Text>
+
+                        <Text fontSize="14px" isTruncated ><i>Name :</i> <b>{rd.name}</b></Text>
+                        <Text fontSize="14px" isTruncated ><i>Phone No. :</i> <b>{rd.phone_number}</b></Text>
+                        <Text fontSize="14px" isTruncated ><i>Blood Group :</i> <b>{rd.blood_group}</b></Text>
+                        <Text fontSize="14px" isTruncated ><i>Location :</i> <b>{rd.city}, {rd.state}</b></Text>
                       </Box>
                     ))}
                   </HStack>
-                </VStack>
+                </VStack> */}
 
               </Box>
             </Collapse>
