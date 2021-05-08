@@ -44,8 +44,9 @@ export function AuthProvider({ children }) {
     setIsLoading(true)
     return auth.signInWithCredential(credential)
       .then((res) => {
+
         if (res.additionalUserInfo.isNewUser) {
-          db.ref('users/' + res.user.uid).set({
+          db.collection('users').doc(res.user.uid).set({
             name: res.user.displayName,
             email: res.user.email,
             photo_url: res.user.photoURL,
@@ -53,6 +54,7 @@ export function AuthProvider({ children }) {
             phone_number: res.user.phoneNumber
           });
         }
+
         history.push('/')
       }).catch((e) => {
         setFirebaseError(e.message)

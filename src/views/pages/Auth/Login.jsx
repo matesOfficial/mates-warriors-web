@@ -141,8 +141,8 @@ function Login() {
                 {/* <Center> */}
                 <Flex width="100%" justify="center" direction={sm ? 'column' : 'row'}>
                   <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
-                    colorScheme="whatsapp" my="2" as={Link}
-                    to={'https://mait.ac.in/images/mates_warriors_v1.0.0.apk'}
+                    colorScheme="whatsapp" my="2" as="a"
+                    href='https://mait.ac.in/images/mates_warriors_v1.0.0.apk'
                   >
                     Download Android App
                   </Button>

@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/layout'
 import { Table, Tbody, Td, Tr } from '@chakra-ui/table'
 import React from 'react'
 
-function DataCard( {donor} ) {
+function DataCard({ donor }) {
   return (
     <Box borderRadius="md"
       borderWidth='2px'
@@ -11,31 +11,31 @@ function DataCard( {donor} ) {
         <Tbody>
           <Tr>
             <Td>Name</Td>
-            <Td><b>{donor.name}</b></Td>
+            <Td><b>{donor?.name || "-"}</b></Td>
           </Tr>
           <Tr>
             <Td>Blood Group</Td>
-            <Td><b>{donor.blood_group}</b></Td>
+            <Td><b>{donor?.blood_group || "-"}</b></Td>
           </Tr>
           <Tr>
             <Td>State</Td>
-            <Td><b>{donor.state}</b></Td>
+            <Td><b>{donor?.state || "-"}</b></Td>
           </Tr>
           <Tr>
             <Td>City</Td>
-            <Td><b>{donor.city}</b></Td>
+            <Td><b>{donor?.city || "-"}</b></Td>
           </Tr>
           <Tr>
             <Td>PinCode</Td>
-            <Td><b>{donor.pincode}</b></Td>
+            <Td><b>{donor?.pin_code || "-"}</b></Td>
           </Tr>
-          <Tr>
+          {/* <Tr>
             <Td>Last Donation:</Td>
-            <Td><b>{donor.date}</b></Td>
-          </Tr>
+            <Td><b>{donor?.last_blood_donation_date || "-"}</b></Td>
+          </Tr> */}
           <Tr>
             <Td>Phone No:</Td>
-            <Td><b>{donor.phone_number}</b></Td>
+            <Td><b>{donor?.phone_number || "-"}</b></Td>
           </Tr>
         </Tbody>
       </Table>
