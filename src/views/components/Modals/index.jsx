@@ -1,8 +1,8 @@
-import { Button, Center, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack } from "@chakra-ui/react";
-import { useState } from 'react';
+import { Button, Center, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import successSVG from "../../../assets/success.svg";
-import { db } from "../../../firebase";
+import { convertDate, db } from "../../../firebase";
 import { useAuth } from "../../../hooks/AuthContext";
 import camelToTitle from "../../../utils/camelToTitle";
 import BloodDonor from "./BloodDonor";
@@ -28,7 +28,13 @@ export default function FormModals({ open, onClose, id }) {
 
   const [registerResult, setRegisterResult] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  const [dbError, setDbError] = useState(null)
   const { curUser } = useAuth();
+
+  useEffect(() => {
+    const interval = setInterval(() => { setDbError(null) }, 2000)
+    return () => clearInterval(interval)
+  }, [dbError])
 
   const formControl = useForm({
     defaultValues: { phone_number: curUser.phoneNumber },
@@ -41,10 +47,15 @@ export default function FormModals({ open, onClose, id }) {
     console.log(data);
     setIsLoading(true)
 
-    db.collection('users').doc(curUser.uid).set(data).then(() => {
-      setRegisterResult(true);
-      setIsLoading(false);
+    db.collection('users').doc(curUser.uid).update({
+      ...data,
+      last_blood_donation_date: convertDate(data.last_blood_donation_date)
     })
+      .then(() => {
+        setRegisterResult(true);
+      }).catch(err => {
+        setDbError("Can't register as a donor. Please try again later.")
+      }).finally(() => setIsLoading(false))
   }
 
   return (
@@ -67,13 +78,20 @@ export default function FormModals({ open, onClose, id }) {
           </ModalBody>
 
           <ModalFooter>
-            {!registerResult &&
-              <Button colorScheme="orange"
-                isLoading={isLoading}
-                onClick={handleSubmit(onSubmit)}
-              >
-                Register as {camelToTitle(id)}
-              </Button>}
+            <VStack justify='center' w="100%">
+              {!!dbError &&
+                <Text color="red.500" mb="5">{dbError}</Text>
+              }
+              {!registerResult &&
+                <Button colorScheme="orange"
+                  isLoading={isLoading}
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Register as {camelToTitle(id)}
+                </Button>
+              }
+            </VStack>
+
           </ModalFooter>
 
         </ModalContent>

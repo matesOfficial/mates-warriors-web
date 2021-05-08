@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const interval = setInterval(() => setFirebaseError(null), 2000)
-    return clearInterval(interval)
+    return () => clearInterval(interval)
   }, [firebaseError])
 
   const signInWithOtp = (codeId, otp) => {

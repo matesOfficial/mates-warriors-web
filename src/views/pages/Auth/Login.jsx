@@ -38,7 +38,7 @@ function Login() {
 
   useEffect(() => {
     const interval = setInterval(() => setError(null), 2000)
-    return clearInterval(interval)
+    return () => clearInterval(interval)
   }, [error, otpSent])
 
   const handlePhone = async (e) => {

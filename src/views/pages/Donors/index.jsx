@@ -1,5 +1,5 @@
 import { HamburgerIcon, Search2Icon } from "@chakra-ui/icons"
-import { Box, Flex, Heading, HStack, Image, Input, InputGroup, InputRightElement, Select, Stack, Text, useMediaQuery, Wrap, WrapItem } from "@chakra-ui/react"
+import { Box, Collapse, Divider, Flex, Heading, HStack, Image, Input, InputGroup, InputRightElement, Select, Stack, Text, useMediaQuery, Wrap, WrapItem } from "@chakra-ui/react"
 import queryString from "query-string"
 import React, { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom"
@@ -8,12 +8,12 @@ import BloodDrop from '../../../assets/bloodDrop.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
 import { db } from "../../../firebase"
-import { bloodgroups } from "../../../utils/citiesAndState"
+import { citiesAndStates, bloodgroups } from "../../../utils/citiesAndState"
 import Footer from '../../components/Footer'
 import NavBar from '../../components/NavBar'
 import DataCard from "./DataCard"
 
-let cities = ['New Delhi', 'Delhi', 'Gurgaon', 'Bangalore', 'Pune', 'Ahmedabad', 'Mumbai', 'Thane', 'Nashik', 'Kolkata', 'Lucknow', 'Noida', 'Faridabad', 'Prayagraj', 'Patna', 'Ranchi', 'Jaipur', 'Agra', 'Chandigarh', 'Nagpur', 'Chennai', 'Bhopal', 'Indore', 'Hyderabad', 'Kerala', 'Bihar', 'Gujarat', 'Maharashtra', 'Karnataka', 'Madhya Pradesh', 'Orissa', 'Uttar Pradesh', 'Telangana', 'Andhra Pradesh', 'Chhatisgarh', 'Tamil Nadu', 'West Bengal', 'Haryana', 'Uttrakhand', 'J&K', 'Himachal Pradesh', 'Jharkhand', 'Rajasthan', 'Goa', 'Assam', 'Punjab', 'Saurashtra & South Gujarat', 'Uttar Pradesh East', 'Uttar Pradesh West', 'Bundelkhand', 'Other']
+// let cities = ['New Delhi', 'Delhi', 'Gurgaon', 'Bangalore', 'Pune', 'Ahmedabad', 'Mumbai', 'Thane', 'Nashik', 'Kolkata', 'Lucknow', 'Noida', 'Faridabad', 'Prayagraj', 'Patna', 'Ranchi', 'Jaipur', 'Agra', 'Chandigarh', 'Nagpur', 'Chennai', 'Bhopal', 'Indore', 'Hyderabad', 'Kerala', 'Bihar', 'Gujarat', 'Maharashtra', 'Karnataka', 'Madhya Pradesh', 'Orissa', 'Uttar Pradesh', 'Telangana', 'Andhra Pradesh', 'Chhatisgarh', 'Tamil Nadu', 'West Bengal', 'Haryana', 'Uttrakhand', 'J&K', 'Himachal Pradesh', 'Jharkhand', 'Rajasthan', 'Goa', 'Assam', 'Punjab', 'Saurashtra & South Gujarat', 'Uttar Pradesh East', 'Uttar Pradesh West', 'Bundelkhand', 'Other']
 
 let oxygenType = ['Cylinder', 'Refill', "Concentrator "]
 
@@ -38,6 +38,7 @@ export default function Donors() {
   const [filterBlood, setFilterBlood] = useState('');
   const [filterPin, setFilterPin] = useState('');
 
+
   const [md] = useMediaQuery("(max-width: 500px)")
 
   const { search } = useLocation();
@@ -54,7 +55,8 @@ export default function Donors() {
   useEffect(() => {
     getFirebaseData().then((data) => {
       setDbData(data.filter((d) => {
-        let city = d.state === filterCity
+        let city = d.city.toLowerCase().search(filterCity.toLowerCase()) !== -1
+        let state = d.state.toLowerCase().search(filterCity.toLowerCase()) !== -1
         let blood = d.blood_group === filterBlood
         let pin = d.pin_code.search(filterPin) !== -1
 
@@ -62,7 +64,7 @@ export default function Donors() {
         if (!filterBlood) blood = true
         if (!filterPin) pin = true
 
-        return city && blood && pin
+        return (city || state) && blood && pin
       }));
     })
   }, [filterCity, filterBlood, filterPin])
@@ -91,15 +93,11 @@ export default function Donors() {
               <HamburgerIcon fontSize="xs" /> &nbsp;&nbsp;
                 <Text fontSize="xs">Filter&nbsp;by</Text>
             </Flex>
-            <Select variant="filled" placeholder="Search by city"
+            <Input variant="filled" placeholder="Search by city"
               value={filterCity}
               defaultValue={filterCity}
               onChange={({ target: { value } }) => setFilterCity(value)}
-            >
-              {cities.map(item => (
-                <option key={item} value={item}>{item}</option>
-              ))}
-            </Select>
+            />
 
             {id === 'oxygenDonor' ?
               <Select variant="filled" placeholder="Select Type"
