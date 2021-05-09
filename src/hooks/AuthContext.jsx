@@ -18,7 +18,8 @@ export function AuthProvider({ children }) {
 
   const [curUser, setCurUser] = useState();
   const [otpSent, setOtpSent] = useState(false);
-  const [firebaseError, setFirebaseError] = useState(null)
+  const [firebaseError, setFirebaseError] = useState(null);
+  const [isRender, setIsRender] = useState(false);
 
   const [codeId, setCodeId] = useState("")
 
@@ -30,6 +31,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authData => {
       setCurUser(authData?.toJSON());
+      setIsRender(true);
     })
     return unsubscribe;
   }, [])
@@ -104,7 +106,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {isRender && children}
     </AuthContext.Provider>
   )
 }
