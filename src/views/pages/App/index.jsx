@@ -17,6 +17,9 @@ function App() {
           <PrivateRoute path="/" exact component={Dashboard} />
           <PrivateRoute path="/donors" exact component={Donors} />
           <PublicRoute path="/login" exact component={Login} />
+          <Route path="*">
+            <div>PAGE NOT FOUND</div>
+          </Route>
         </Switch>
       </AuthProvider>
     </BrowserRouter>

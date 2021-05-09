@@ -1,24 +1,25 @@
 import { Button } from '@chakra-ui/button'
-import { ArrowForwardIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon, ChevronUpIcon, LinkIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
-import { Avatar, Box, Collapse, Divider, Flex, Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem } from "@chakra-ui/react"
-import { Table, TableCaption, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table'
-import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-
+import {
+  Avatar, Box, Collapse, Divider, Flex, Link as Alink,
+  Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem
+} from "@chakra-ui/react"
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import BloodDrop from '../../../assets/bloodDrop.svg'
 import Doctor from '../../../assets/doctor.svg'
 import FAQ from '../../../assets/faq.svg'
 import DonorLogo from '../../../assets/Icons/health-care.svg'
 import TakerLogo from '../../../assets/Icons/organ-donation.svg'
+import YoutubeIcon from '../../../assets/Icons/youtube.svg'
 import Organ from '../../../assets/organ.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
-import { db } from '../../../firebase'
-import { useAuth } from '../../../hooks/AuthContext'
 import Footer from '../../components/Footer'
 import FormModals from '../../components/Modals'
 import NavBar from '../../components/NavBar'
+
 
 const DonorLayer = {
   'bloodDonor': { name: 'Blood', image: BloodDrop, disabled: false },
@@ -32,12 +33,12 @@ export default function Dashboard() {
   const [openModal, setOpenModal] = useState(null);
   const [isDonor, setIsDonor] = useState(false);
 
-  const [recentDonors, setRecentDonors] = useState([])
+  // const [recentDonors, setRecentDonors] = useState([])
 
-  const getRecentDonors = async () => {
-    const snapshot = await db.collection('users').limit(4).get()
-    return snapshot.docs.map(doc => doc.data());
-  }
+  // const getRecentDonors = async () => {
+  //   const snapshot = await db.collection('users').limit(4).get()
+  //   return snapshot.docs.map(doc => doc.data());
+  // }
 
   // useEffect(() => {
   //   getRecentDonors().then((data) => {
@@ -61,8 +62,8 @@ export default function Dashboard() {
       <Box position="absolute" bottom="8" right="8" >
         <Tooltip label="FAQ" >
           <Avatar size="md" m="1"
-            as={Link}
-            to="/"
+            as="a"
+            href="https://youtu.be/BrlQYFg0hm8"
             showBorder="true"
             src={FAQ}
           />
@@ -70,7 +71,9 @@ export default function Dashboard() {
       </Box>
 
       <Box mx="auto" my="8" flex="1" >
-        <Box p="6" w={{ base: '100vw', md: '90vw' }} borderWidth="1px" borderRadius="lg" bgColor="#fff" >
+        <Box p="6" w={{ base: '99vw', md: '90vw' }}
+          borderWidth="1px" borderRadius="lg" bgColor="#fff"
+        >
           <Flex flexDirection='column'>
             <Button style={{ display: 'flex', justifyContent: 'space-between' }}
               size="lg"
@@ -89,23 +92,24 @@ export default function Dashboard() {
             </Button>
             <Collapse in={isDonor}>
               <Box my='6' mx='2'>
-                <Wrap spacing='10'>
+                <Wrap spacing='10' justify={{ base: "center", sm: "start" }}>
                   {Object.keys(DonorLayer).map(type => (
                     <Tooltip key={type} isDisabled={!DonorLayer[type].disabled}
                       label="Coming Soon" fontSize="md"
                     >
-                      <WrapItem>
-                        <Button onClick={() => setOpenModal(type)}
+                      <WrapItem flex="1" maxW="10rem">
+                        <Button flex="1"
+                          onClick={() => setOpenModal(type)}
                           isDisabled={DonorLayer[type].disabled}
                           variant="outline"
                           _focus={{ borderColor: "var(--chakra-colors-yellow-400)" }}
                           borderWidth='2px' borderColor='rgba(238, 238, 238, 1)'
-                          p='12px' height='150px' width='150px'
+                          p='12px' minH='8rem' minW='8rem'
                         >
                           <VStack spacing={4} >
                             <Image
                               src={DonorLayer[type].image}
-                              height={{ base: '10vh', md: '10vh', lg: '6vh', xl: '10vh' }}
+                              boxSize="4rem" objectFit="scale-down"
                             />
                             <Text>{DonorLayer[type].name}</Text>
                           </VStack>
@@ -136,25 +140,25 @@ export default function Dashboard() {
             </Button>
             <Collapse in={!isDonor}>
               <Box my='6' mx='2'>
-                <Wrap spacing='10'>
+                <Wrap spacing='10' justify={{ base: "center", sm: "start" }} >
                   {Object.keys(DonorLayer).map(type => (
                     <Tooltip key={type} isDisabled={!DonorLayer[type].disabled}
                       label="Coming Soon" fontSize="md"
                     >
-                      <WrapItem>
-                        <Button
+                      <WrapItem flex="1" maxW="10rem">
+                        <Button flex="1"
                           isDisabled={DonorLayer[type].disabled}
                           as={Link}
                           to={`/donors?type=${type}`}
                           variant="outline"
                           _focus={{ borderColor: "var(--chakra-colors-yellow-400)" }}
                           borderWidth='2px' borderColor='rgba(238, 238, 238, 1)'
-                          p='12px' height='150px' width='150px'
+                          p='12px' minH='8rem' minW='8rem'
                         >
                           <VStack spacing={4} >
                             <Image
                               src={DonorLayer[type].image}
-                              height={{ base: '10vh', md: '10vh', lg: '6vh', xl: '10vh' }}
+                              boxSize="4rem" objectFit="scale-down"
                             />
                             <Text>{DonorLayer[type].name}</Text>
                           </VStack>

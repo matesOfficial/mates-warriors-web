@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
   const [curUser, setCurUser] = useState();
   const [otpSent, setOtpSent] = useState(false);
   const [firebaseError, setFirebaseError] = useState(null);
-  const [isRender, setIsRender] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   const [codeId, setCodeId] = useState("")
 
@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authData => {
       setCurUser(authData?.toJSON());
-      setIsRender(true);
+      setIsAuthenticating(false);
     })
     return unsubscribe;
   }, [])
@@ -97,8 +97,10 @@ export function AuthProvider({ children }) {
   }
 
   const logout = () => {
-    auth.signOut()
-    setOtpSent(false);
+    auth.signOut().then(() => {
+      setCurUser(null);
+      setOtpSent(false);
+    })
   }
 
   const value = { curUser, otpSent, isLoading, firebaseError, login, submitOtp, logout };
@@ -106,7 +108,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {isRender && children}
+      {!isAuthenticating && children}
     </AuthContext.Provider>
   )
 }

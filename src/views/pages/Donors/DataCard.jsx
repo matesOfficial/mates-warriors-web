@@ -4,7 +4,7 @@ import React from 'react'
 
 function DataCard({ donor }) {
   return (
-    <Box borderRadius="md"
+    <Box borderRadius="md" flex="1"
       borderWidth='2px'
     >
       <Table variant="striped" size="sm">

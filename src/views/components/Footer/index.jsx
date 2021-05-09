@@ -10,7 +10,7 @@ export default function Footer() {
     <>
       <Box bg="yellow.100" width="100%" p="3" >
         <Center>
-          <Text fontSize='sm'>
+          <Text fontSize='xs' isTruncated>
             Copyright &copy; <b>Maharaja Agrasen Technical Society 2021</b>
           </Text>
         </Center>
