@@ -150,13 +150,6 @@ export default function Donors() {
                   <DataCard donor={donor} />
                 </WrapItem>
               ))}
-              {dbData.map(donor => (
-                <WrapItem key={donor.phone_number}
-                  flex="1" minW="15rem" maxW="25rem"
-                >
-                  <DataCard donor={donor} />
-                </WrapItem>
-              ))}
             </Wrap>
           </Box>
         </Box>

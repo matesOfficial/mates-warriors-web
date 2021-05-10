@@ -68,7 +68,7 @@ export default function FormModals({ open, onClose, id }) {
           <ModalCloseButton />
           <ModalHeader><Center>{camelToTitle(id)}</Center></ModalHeader>
 
-          <ModalBody pb={6}>
+          <ModalBody pb={6} className="custom-scroll">
             {(registerResult) ?
               <VStack justify='center'>
                 <Image src={successSVG} px={20} py={10} />

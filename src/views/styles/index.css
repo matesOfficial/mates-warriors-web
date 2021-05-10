@@ -19,13 +19,13 @@ body {
 /* Track */
 .custom-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 /* Handle */
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 /* Handle on hover */

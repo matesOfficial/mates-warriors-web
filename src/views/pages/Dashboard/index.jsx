@@ -1,12 +1,10 @@
 import { Button } from '@chakra-ui/button'
 import { ChevronDownIcon, ChevronUpIcon, LinkIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
-import {
-  Avatar, Box, Collapse, Divider, Flex, Link as Alink,
-  Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem
-} from "@chakra-ui/react"
+import { Link as Alink, Avatar, Box, Collapse, Divider, Flex, Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem } from "@chakra-ui/react"
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import BloodDrop from '../../../assets/bloodDrop.svg'
 import Doctor from '../../../assets/doctor.svg'
 import FAQ from '../../../assets/faq.svg'
@@ -19,7 +17,6 @@ import PlasmaDrop from '../../../assets/plasmaDrop.svg'
 import Footer from '../../components/Footer'
 import FormModals from '../../components/Modals'
 import NavBar from '../../components/NavBar'
-
 
 const DonorLayer = {
   'bloodDonor': { name: 'Blood', image: BloodDrop, disabled: false },
@@ -64,6 +61,7 @@ export default function Dashboard() {
           <Avatar size="md" m="1"
             as="a"
             href="https://youtu.be/BrlQYFg0hm8"
+            target="_blank"
             showBorder="true"
             src={FAQ}
           />
