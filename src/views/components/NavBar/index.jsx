@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import LogOutLogo from '../../../assets/Icons/logout.svg'
 import ProfileLogo from '../../../assets/Icons/profile-user.svg'
-import Logo from '../../../assets/institutelogos/Logo.png'
+import Logo from '../../../assets/institutelogos/MAIT.svg'
 import { useAuth } from '../../../hooks/AuthContext'
 import { formatPhoneNumber } from '../../../utils/regex'
 

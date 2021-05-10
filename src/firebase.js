@@ -16,6 +16,7 @@ const app = firebase.initializeApp(firebaseConfig);
 export const convertDate = (d) => firebase.firestore.Timestamp.fromDate(new Date(d))
 
 export const db = app.firestore();
+export const storage = app.storage();
 export const auth = app.auth();
 
 export default app;

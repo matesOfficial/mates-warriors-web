@@ -14,6 +14,7 @@ import androidLogo from "../../../assets/Icons/android.svg"
 import appleLogo from "../../../assets/Icons/apple.svg"
 import LoginSVG from '../../../assets/login.svg'
 import mauLogo from '../../../assets/logos.svg'
+import { db, storage } from '../../../firebase'
 import { useAuth } from '../../../hooks/AuthContext'
 import { formatPhoneNumber, validatePhone } from '../../../utils/regex'
 
@@ -24,11 +25,13 @@ const styles = {
 function Login() {
   const [mobileInput, setMobileInput] = useState('')
   const [otpInput, setOtpInput] = useState('')
+
   const [error, setError] = useState(null)
 
   const { login, firebaseError, otpSent, submitOtp, isLoading } = useAuth();
 
   const [sm] = useMediaQuery("(max-width: 1024px)")
+
 
   useEffect(() => {
     if (mobileInput && !mobileInput?.startsWith("+")) {
@@ -55,6 +58,17 @@ function Login() {
     }
   }
 
+  const handleApk = () => {
+    storage.refFromURL("gs://covid-app-33605.appspot.com/App.apk")
+      .getDownloadURL()
+      .then((url) => {
+        let a = document.createElement('a')
+        a.href = url
+        a.click()
+        a.remove()
+      })
+  }
+
 
   return (
     <>
@@ -72,10 +86,11 @@ function Login() {
       }
       <div id="recaptcha-verifier-container"></div>
       <Center minH="100vh">
-        <Box w='75vw' borderWidth="1px" borderRadius="lg" minH="80vh"
+        <Box w={{ base: '90vw', md: "75vw" }}
+          borderWidth="1px" borderRadius="lg" minH="80vh"
           bgColor="#fff"
         >
-          <Flex direction={sm ? 'column' : 'row'}>
+          <Flex direction={{ base: 'column', lg: 'row' }}>
             <Center w={sm ? "100%" : '50%'} minH={sm ? "" : '80vh'}>
               <Image src={LoginSVG}
                 boxSize={sm ? '200px' : "500px"}
@@ -83,7 +98,7 @@ function Login() {
               />
             </Center>
 
-            <Box flex="1" p={sm ? '2rem' : '4rem'}>
+            <Box flex="1" p={{ base: '1rem', md: "4rem" }}>
               <VStack justify='space-between' h="100%">
                 <Box width="100%">
                   <form>
@@ -141,8 +156,8 @@ function Login() {
                 {/* <Center> */}
                 <Flex width="100%" justify="center" direction={sm ? 'column' : 'row'}>
                   <Button leftIcon={<Image src={androidLogo} boxSize="20px" objectFit="scale-down" />}
-                    colorScheme="whatsapp" my="2" as="a"
-                    href='https://mait.ac.in/images/mates_warriors_v1.0.0.apk'
+                    colorScheme="whatsapp" my="2"
+                    onClick={handleApk}
                   >
                     Download Android App
                   </Button>
