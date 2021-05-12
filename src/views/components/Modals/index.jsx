@@ -49,7 +49,7 @@ export default function FormModals({ open, onClose, id }) {
 
     db.collection('users').doc(curUser.uid).update({
       ...data,
-      last_blood_donation_date: convertDate(data.last_blood_donation_date)
+      last_blood_donation_date: convertDate(data.last_blood_donation_date),
     })
       .then(() => {
         setRegisterResult(true);

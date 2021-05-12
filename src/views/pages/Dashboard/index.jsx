@@ -60,7 +60,7 @@ export default function Dashboard() {
         <Tooltip label="FAQ" >
           <Avatar size="md" m="1"
             as="a"
-            href="https://youtu.be/BrlQYFg0hm8"
+            href="https://youtu.be/Zm4ptkIXlTA"
             target="_blank"
             showBorder="true"
             src={FAQ}
