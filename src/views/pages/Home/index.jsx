@@ -26,7 +26,7 @@ const DonorLayer = {
   'organDonor': { name: 'Organ', image: Organ, disabled: true },
 }
 
-export default function Dashboard() {
+export default function Home() {
   const [openModal, setOpenModal] = useState(null);
   const [isDonor, setIsDonor] = useState(false);
 

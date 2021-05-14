@@ -1,4 +1,3 @@
-import { RepeatClockIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
 import { Avatar, Flex, Heading, HStack, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/react"
 import React from 'react'
@@ -36,8 +35,9 @@ export default function NavBar() {
             />
           </MenuButton>
           <MenuList zIndex="100">
-            <MenuItem icon={<Image src={ProfileLogo} boxSize="1.2rem" />} >
-              <strong>{formatPhoneNumber(curUser.phoneNumber)}</strong>
+            <MenuItem as={Link} to="/profile"
+              icon={<Image src={ProfileLogo} boxSize="1.2rem" />} >
+              <strong>Profile</strong>
             </MenuItem>
             {/* <MenuItem icon={<RepeatClockIcon fontSize="1.2rem" />} >
               <strong>History</strong>

@@ -2,7 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react"
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './views/pages/App';
+import App from './App';
 
 import "./views/styles/index.css"
 
