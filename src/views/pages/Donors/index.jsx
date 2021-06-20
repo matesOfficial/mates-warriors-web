@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom"
 import BloodDrop from '../../../assets/bloodDrop.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
+import Doctor from '../../../assets/doctor.svg'
+
 import { db } from "../../../firebase"
 import { citiesAndStates, bloodgroups } from "../../../utils/citiesAndState"
 import Footer from '../../components/Footer'
@@ -25,6 +27,8 @@ const getData = (id) => {
       return { name: "Plasma Donors", img: PlasmaDrop }
     case 'oxygenDonor':
       return { name: "Oxygen Donors", img: Oxygen }
+    case 'consultancy':
+      return { name: "Consultants", img: Doctor }
     default:
       return { name: "Blood Donors", img: BloodDrop }
   }

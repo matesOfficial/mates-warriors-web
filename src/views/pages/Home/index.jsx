@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button'
 import { ChevronDownIcon, ChevronUpIcon, LinkIcon } from '@chakra-ui/icons'
 import { Image } from '@chakra-ui/image'
 import { Link as Alink, Avatar, Box, Collapse, Divider, Flex, Heading, HStack, Text, Tooltip, VStack, Wrap, WrapItem } from "@chakra-ui/react"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import BloodDrop from '../../../assets/bloodDrop.svg'
@@ -14,15 +14,23 @@ import YoutubeIcon from '../../../assets/Icons/youtube.svg'
 import Organ from '../../../assets/organ.svg'
 import Oxygen from '../../../assets/oxygen.svg'
 import PlasmaDrop from '../../../assets/plasmaDrop.svg'
+import { db } from "../../../firebase"
 import Footer from '../../components/Footer'
 import FormModals from '../../components/Modals'
 import NavBar from '../../components/NavBar'
 
+const RegisterLayer = {
+  'bloodDonor': { name: 'Blood', image: BloodDrop, disabled: false },
+  'plasmaDonor': { name: 'Plasma', image: PlasmaDrop, disabled: false },
+  'oxygenDonor': { name: 'Oxygen', image: Oxygen, disabled: false },
+  'organDonor': { name: 'Organ', image: Organ, disabled: true },
+}
+
 const DonorLayer = {
   'bloodDonor': { name: 'Blood', image: BloodDrop, disabled: false },
   'plasmaDonor': { name: 'Plasma', image: PlasmaDrop, disabled: false },
-  'oxygenDonor': { name: 'Oxygen', image: Oxygen, disabled: true },
-  'consultancy': { name: 'Consultancy', image: Doctor, disabled: true },
+  'consultancy': { name: 'Consultancy', image: Doctor, disabled: false },
+  'oxygenDonor': { name: 'Oxygen', image: Oxygen, disabled: false },
   'organDonor': { name: 'Organ', image: Organ, disabled: true },
 }
 
@@ -30,18 +38,18 @@ export default function Home() {
   const [openModal, setOpenModal] = useState(null);
   const [isDonor, setIsDonor] = useState(false);
 
-  // const [recentDonors, setRecentDonors] = useState([])
+  const [recentDonors, setRecentDonors] = useState([])
 
-  // const getRecentDonors = async () => {
-  //   const snapshot = await db.collection('users').limit(4).get()
-  //   return snapshot.docs.map(doc => doc.data());
-  // }
+  const getRecentDonors = async () => {
+    const snapshot = await db.collection('users').limit(4).get()
+    return snapshot.docs.map(doc => doc.data());
+  }
 
-  // useEffect(() => {
-  //   getRecentDonors().then((data) => {
-  //     setRecentDonors(data);
-  //   })
-  // }, [])
+  useEffect(() => {
+    getRecentDonors().then((data) => {
+      setRecentDonors(data);
+    })
+  }, [])
 
   const closeModal = () => { setOpenModal(null) };
 
@@ -91,7 +99,7 @@ export default function Home() {
             <Collapse in={isDonor}>
               <Box my='6' mx='2'>
                 <Wrap spacing='10' justify={{ base: "center", sm: "start" }}>
-                  {Object.keys(DonorLayer).map(type => (
+                  {Object.keys(RegisterLayer).map(type => (
                     <Tooltip key={type} isDisabled={!DonorLayer[type].disabled}
                       label="Coming Soon" fontSize="md"
                     >
@@ -166,7 +174,7 @@ export default function Home() {
                   ))}
                 </Wrap>
 
-                {/* <VStack display={{ base: 'none', xl: 'block' }}>
+                <VStack display={{ base: 'none', xl: 'block' }}>
                   <HStack spacing={6} mt='6' mb="3" ml="1"  >
                     <Text size="sm" >Try our most recent and verified leads</Text>
                   </HStack>
@@ -184,7 +192,7 @@ export default function Home() {
                       </Box>
                     ))}
                   </HStack>
-                </VStack> */}
+                </VStack>
 
               </Box>
             </Collapse>
